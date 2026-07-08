@@ -21,6 +21,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class ContentCrudController extends AbstractCrudController
 {
@@ -38,6 +40,7 @@ class ContentCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            FormField::addFieldset('Basics'),
             IdField::new('id')->onlyOnIndex(),
             TextField::new('title'),
             SlugField::new('slug')->setTargetFieldName('title'),
@@ -46,9 +49,28 @@ class ContentCrudController extends AbstractCrudController
             IntegerField::new('position'),
             BooleanField::new('isActive', 'Active'),
             AssociationField::new('parent')->autocomplete()->hideOnIndex(),
+
+            FormField::addFieldset('Text fields')->collapsible()->hideOnIndex(),
+            TextareaField::new('text1')->hideOnIndex(),
+            TextareaField::new('text2')->hideOnIndex(),
+            TextareaField::new('text3')->hideOnIndex(),
+            TextareaField::new('text4')->hideOnIndex(),
+            TextareaField::new('text5')->hideOnIndex(),
+            TextareaField::new('text6')->hideOnIndex(),
+
+            FormField::addFieldset('Images')->collapsible()->hideOnIndex(),
+            ImageField::new('image1')->setUploadDir('public/uploads/content')->setBasePath('uploads/content')->hideOnIndex(),
+            ImageField::new('image2')->setUploadDir('public/uploads/content')->setBasePath('uploads/content')->hideOnIndex(),
+            ImageField::new('image3')->setUploadDir('public/uploads/content')->setBasePath('uploads/content')->hideOnIndex(),
+            ImageField::new('image4')->setUploadDir('public/uploads/content')->setBasePath('uploads/content')->hideOnIndex(),
+
+            FormField::addFieldset('Buttons')->collapsible()->hideOnIndex(),
+            TextField::new('btnText1')->hideOnIndex(),
+            TextField::new('btnLink1')->hideOnIndex(),
+            TextField::new('btnText2')->hideOnIndex(),
+            TextField::new('btnLink2')->hideOnIndex(),
         ];
     }
-
     // Only show top-level pages by default; show children when ?parentId=X is present
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {

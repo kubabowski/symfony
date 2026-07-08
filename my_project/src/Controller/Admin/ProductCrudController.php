@@ -2,10 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tag;
+use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ProductCrudController extends AbstractCrudController
@@ -15,14 +19,16 @@ class ProductCrudController extends AbstractCrudController
         return Product::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            IdField::new('id')->onlyOnIndex(),
+            TextField::new('name'),
+            SlugField::new('slug')->setTargetFieldName('name'),
+            TextareaField::new('description'),
+            MoneyField::new('price')->setCurrency('USD')->setStoredAsCents(false),
+            IntegerField::new('stock'),
+            BooleanField::new('isActive', 'Active'),
         ];
     }
-    */
 }

@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\FormFieldReference;
 use App\Entity\Post;
 use App\Entity\Tag;
+use App\Entity\Product;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;

@@ -20,6 +20,7 @@ class ContentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.parent IS NULL')
+            ->andWhere('c.isActive = true')
             ->orderBy('c.position', 'ASC')
             ->getQuery()
             ->getResult();

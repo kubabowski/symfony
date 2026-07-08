@@ -1,0 +1,6 @@
+<section class="content-section content-section--{{ section.type|default('generic') }}">
+    <h2>{{ section.title }}</h2>
+    {% if section.body %}
+        <div>{{ section.body|raw }}</div>
+    {% endif %}
+</section>

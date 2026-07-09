@@ -1,0 +1,2232 @@
+/* ============================================================
+   GCHemp — theme.css
+   Organic Luxury · Craftowa manufaktura z Kaszub
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap');
+
+/* ── Design Tokens ────────────────────────────────────────── */
+:root {
+    --c-forest:     #1a2e0f;   /* dark forest green */
+    --c-moss:       #2d5016;   /* mid green */
+    --c-fern:       #4a7c2f;   /* accent green */
+    --c-sage:       #8aaa6e;   /* light sage */
+    --c-cream:      #f5f0e8;   /* warm cream */
+    --c-parchment:  #ede5d4;   /* parchment */
+    --c-gold:       #b8922a;   /* muted gold */
+    --c-gold-light: #d4aa4a;   /* lighter gold */
+    --c-earth:      #6b4f2a;   /* earth brown */
+    --c-charcoal:   #1c1c1a;   /* near-black */
+    --c-text:       #2a2a24;
+    --c-text-light: #6b6b5a;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Jost', 'Helvetica Neue', sans-serif;
+
+    --space-xs:  0.5rem;
+    --space-sm:  1rem;
+    --space-md:  2rem;
+    --space-lg:  4rem;
+    --space-xl:  7rem;
+
+    --radius-sm: 4px;
+    --radius-md: 12px;
+
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--c-text);
+    background: var(--c-cream);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--c-forest);
+}
+
+/* ── Container ────────────────────────────────────────────── */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* ── Grain overlay (global texture) ──────────────────────── */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════════════════════ */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 0;
+    transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+    background: transparent;
+}
+
+.site-header.scrolled {
+    background: rgba(26, 46, 15, 0.96);
+    backdrop-filter: blur(12px);
+    padding: 0.75rem 0;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.25);
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.site-logo a {
+    display: flex;
+    align-items: center;
+}
+
+.site-logo img.custom-logo {
+    width: auto;
+    height: 52px;
+    filter: brightness(0) invert(1);
+    transition: opacity var(--transition);
+}
+
+.site-logo img.custom-logo:hover { opacity: 0.8; }
+
+/* Nav */
+.main-navigation ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+}
+
+.main-navigation ul li a {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.main-navigation ul li a:hover,
+.main-navigation ul li.current-menu-item a {
+    color: var(--c-gold-light);
+    border-bottom-color: var(--c-gold-light);
+}
+
+/* ── Header scroll script (inline) ──────────────────────── */
+
+/* ══════════════════════════════════════════════════════════
+   HOME DESC (hidden placeholder)
+══════════════════════════════════════════════════════════ */
+.home-desc { display: none; }
+
+/* ══════════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════════ */
+.hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            160deg,
+            rgba(10, 20, 5, 0.72) 0%,
+            rgba(26, 46, 15, 0.55) 50%,
+            rgba(15, 30, 8, 0.78) 100%
+    );
+}
+
+/* Decorative bottom fade */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, transparent, var(--c-cream));
+    pointer-events: none;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+    padding-top: 6rem;
+}
+
+.hero-content {
+    max-width: 680px;
+
+
+    * {
+        color: rgba(255,255,255) !important;
+    }
+}
+
+.hero-logo {
+    width: 90px;
+    height: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s ease both;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s 0.15s ease both;
+}
+
+.hero-title p { margin: 0; }
+
+.hero-tagline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.3s ease both;
+}
+
+.hero-tagline {
+    margin: 0;
+    color: rgba(255,255,255,0.75);
+}
+
+/* Scroll cue */
+.hero-content::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 70px;
+    background: linear-gradient(to bottom, var(--c-gold-light), transparent);
+
+    margin-top: 3.5rem;
+    animation: fadeUp 1s 0.5s ease both, pulse 2.5s 1.5s ease-in-out infinite;
+
+}
+
+/* ══════════════════════════════════════════════════════════
+   ABOUT SECTION
+══════════════════════════════════════════════════════════ */
+.about-section {
+    padding: var(--space-xl) 0;
+    background: var(--c-cream);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background botanical accent */
+.about-section::before {
+    content: 'GCHemp';
+    position: absolute;
+    top: 50%;
+    right: -3rem;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: var(--font-display);
+    font-size: 10rem;
+    font-weight: 700;
+    color: rgba(45, 80, 22, 0.04);
+    letter-spacing: 0.3em;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+}
+
+.section-header {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.section-subtitle {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--c-gold);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-gold);
+}
+
+/* Swiper overrides */
+.about-swiper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+}
+
+.about-swiper .swiper-slide {
+    height: auto;
+}
+
+.slide-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 520px;
+    background: var(--c-forest);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.slide-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) brightness(0.9);
+    transition: filter 0.6s ease, transform 0.8s ease;
+}
+
+.swiper-slide-active .slide-content img {
+    filter: saturate(1) brightness(1);
+    transform: scale(1.02);
+}
+
+.slide-text {
+    padding: 4rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--c-forest);
+    position: relative;
+}
+
+/* Gold decorative line */
+.slide-text::before {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: 3.5rem;
+    width: 40px;
+    height: 2px;
+    background: var(--c-gold);
+}
+
+.slide-text h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--c-cream);
+    margin-top: 2rem;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+}
+
+.slide-text h3 p { margin: 0; }
+
+.slide-text p {
+    color: rgba(245, 240, 232, 0.72);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.slide-text p p { margin: 0; }
+
+/* Swiper buttons */
+.swiper-button-prev,
+.swiper-button-next {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(245, 240, 232, 0.1);
+    border: 1px solid rgba(245, 240, 232, 0.2);
+    backdrop-filter: blur(4px);
+    transition: background var(--transition), border-color var(--transition);
+    top: auto;
+    bottom: 1.5rem;
+}
+
+.swiper-button-prev { left: auto; right: 4.5rem; }
+.swiper-button-next { right: 1.5rem; }
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background: rgba(184, 146, 42, 0.25);
+    border-color: var(--c-gold-light);
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 14px;
+    color: var(--c-cream);
+    font-weight: 600;
+}
+
+.swiper-pagination {
+    position: static;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    background: var(--c-sage);
+    opacity: 0.4;
+    border-radius: 50%;
+    transition: opacity var(--transition), transform var(--transition);
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    transform: scale(1.4);
+    background: var(--c-gold);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRODUCT SECTION
+══════════════════════════════════════════════════════════ */
+.product-section {
+    padding: var(--space-xl) 0;
+    background: var(--c-parchment);
+    position: relative;
+}
+
+/* Top border accent */
+.product-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--c-gold));
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.product-grid > img {
+    border-radius: var(--radius-md);
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    box-shadow:
+            20px 20px 0 var(--c-sage),
+            22px 22px 60px rgba(26, 46, 15, 0.2);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.product-grid > img:hover {
+    transform: translate(-4px, -4px);
+    box-shadow:
+            24px 24px 0 var(--c-sage),
+            26px 26px 70px rgba(26, 46, 15, 0.25);
+}
+
+.product-content {
+    padding: 1rem 0;
+}
+
+/* Small label above title */
+.product-content::before {
+    content: 'Produkt';
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--c-gold);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-gold);
+    width: fit-content;
+}
+
+.product-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--c-forest);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.product-content > p {
+    color: var(--c-text-light);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+.product-content > p p { margin: 0; }
+
+/* Feature list */
+.product-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--c-text);
+    letter-spacing: 0.02em;
+    line-height: 1;
+}
+
+/* Override WP's <br> inside list items */
+.feature-item br { display: none; }
+
+.feature-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: rgba(45, 80, 22, 0.08);
+    border-radius: 50%;
+    padding: 2px;
+}
+
+/* Fix the code block wrapping (WP injects <code> tags) */
+.product-content code { display: contents; font-family: inherit; }
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════ */
+.site-footer {
+    background: var(--c-charcoal);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.site-info {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+}
+
+.site-info a {
+    color: rgba(255,255,255,0.3);
+    transition: color var(--transition);
+}
+
+.site-info a:hover { color: var(--c-gold-light); }
+
+/* ══════════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════════ */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
+
+/* Scroll-triggered reveal (JS adds .revealed) */
+.reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .slide-content {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .slide-content img {
+        height: 280px;
+    }
+
+    .slide-text {
+        padding: 2.5rem 2rem;
+    }
+
+    .slide-text::before {
+        left: 2rem;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .product-grid > img {
+        aspect-ratio: 16/9;
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --space-xl: 4rem;
+        --space-lg: 2.5rem;
+    }
+
+    .main-navigation ul {
+        gap: 1.5rem;
+    }
+
+    .main-navigation ul li a {
+        font-size: 0.7rem;
+    }
+
+    .hero-content::after {
+        display: none;
+    }
+
+    .about-section::before {
+        display: none;
+    }
+}
+
+
+
+
+/* ══════════════════════════════════════════════════════════
+   WOOCOMMERCE — SHARED
+══════════════════════════════════════════════════════════ */
+
+/* Padding pod fixed header na wszystkich stronach WC */
+.woocommerce-shop .site-content,
+.woocommerce-page .site-content,
+.single-product .site-content {
+    padding-top: 90px;
+}
+
+/* Resetuj domyślne WC style które psują layout */
+.woocommerce ul.products::before,
+.woocommerce ul.products::after { display: none; }
+
+/* ══════════════════════════════════════════════════════════
+   SHOP PAGE — SKLEP
+══════════════════════════════════════════════════════════ */
+
+/* Tytuł strony "Sklep" */
+.woocommerce-shop .entry-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--c-forest);
+    margin-bottom: 3rem;
+    padding-top: 2rem;
+}
+
+.woocommerce-shop .entry-title::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: var(--c-gold);
+    margin-top: 1rem;
+}
+
+/* Grid produktów — nadpisz WooCommerce defaults */
+.woocommerce ul.products.columns-4,
+.woocommerce ul.products.columns-3,
+.woocommerce ul.products {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 2rem !important;
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 3rem !important;
+    padding: 0 !important;
+    list-style: none !important;
+    clear: both;
+}
+
+/* Kafelek produktu */
+.woocommerce ul.products li.product {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    transition: transform var(--transition), box-shadow var(--transition);
+    border: 1px solid rgba(45, 80, 22, 0.08);
+    /* Resetuj WC float */
+    float: none !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    clear: none !important;
+}
+
+.woocommerce ul.products li.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(26, 46, 15, 0.12);
+}
+
+/* Zdjęcie w kafelku */
+.woocommerce ul.products li.product a img {
+    width: 100% !important;
+    height: 200px;
+    object-fit: cover;
+    display: block !important;
+    transition: transform 0.6s ease;
+    margin: 0 !important;
+}
+
+.woocommerce ul.products li.product:hover a img {
+    transform: scale(1.04);
+}
+
+/* Link owijający — blokuj overflow zdjęcia */
+.woocommerce ul.products li.product .woocommerce-LoopProduct-link {
+    display: block;
+    overflow: hidden;
+}
+
+/* Tytuł produktu w kafelku */
+.woocommerce ul.products li.product h2.woocommerce-loop-product__title {
+    font-family: var(--font-display) !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: var(--c-forest) !important;
+    padding: 1rem 1.25rem 0.25rem !important;
+    margin: 0 !important;
+    line-height: 1.3;
+}
+
+/* Cena w kafelku */
+.woocommerce ul.products li.product .price {
+    display: block !important;
+    padding: 0 1.25rem 0.75rem !important;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--c-text-light);
+    margin: 0 !important;
+}
+
+.woocommerce ul.products li.product .price del {
+    opacity: 0.5;
+    font-size: 0.85rem;
+    margin-right: 0.3rem;
+}
+
+.woocommerce ul.products li.product .price ins {
+    text-decoration: none;
+    color: var(--c-fern);
+    font-weight: 500;
+}
+
+/* Badge "Promocja!" w gridzie */
+.woocommerce ul.products li.product .onsale {
+    position: absolute !important;
+    top: 0.75rem !important;
+    left: 0.75rem !important;
+    right: auto !important;
+    background: var(--c-gold) !important;
+    color: #fff !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    padding: 0.3rem 0.6rem !important;
+    border-radius: 2px !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    line-height: 1 !important;
+    z-index: 2;
+}
+
+/* Przycisk "Dodaj do koszyka" — jest tagiem <a> */
+.woocommerce ul.products li.product a.button.add_to_cart_button {
+    display: block !important;
+    width: calc(100% - 2.5rem) !important;
+    margin: 0 1.25rem 1.25rem !important;
+    padding: 0.65rem 1rem !important;
+    background: transparent !important;
+    border: 1px solid var(--c-moss) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--c-moss) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.7rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition) !important;
+    box-shadow: none !important;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.woocommerce ul.products li.product a.button.add_to_cart_button:hover,
+.woocommerce ul.products li.product a.button.add_to_cart_button.added {
+    background: var(--c-moss) !important;
+    color: var(--c-cream) !important;
+}
+
+/* "Zobacz koszyk" link po dodaniu */
+.woocommerce ul.products li.product a.added_to_cart {
+    display: block;
+    text-align: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-gold);
+    padding: 0 1.25rem 1rem;
+    transition: color var(--transition);
+}
+
+.woocommerce ul.products li.product a.added_to_cart:hover {
+    color: var(--c-earth);
+}
+
+@media (max-width: 1024px) {
+    .woocommerce ul.products.columns-4,
+    .woocommerce ul.products {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .woocommerce ul.products.columns-4,
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .woocommerce ul.products.columns-4,
+    .woocommerce ul.products {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   SINGLE PRODUCT PAGE
+══════════════════════════════════════════════════════════ */
+
+/* Kontener strony produktu */
+.single-product #primary {
+    padding-top: 1rem;
+}
+
+/* Ukryj meta (posted-on / author) */
+.single-product .entry-meta {
+    display: none;
+}
+
+/* Ukryj footer-meta (permalink / edit) */
+.single-product footer.entry-meta {
+    display: none;
+}
+
+/* Tytuł h1 produktu */
+.single-product .entry-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--c-forest);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+}
+
+/* Główny layout produktu: galeria lewa, summary prawa */
+.single-product div.product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 5rem;
+    align-items: start;
+    position: relative;
+}
+
+/* Galeria */
+.single-product .woocommerce-product-gallery {
+    opacity: 1 !important;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+}
+
+.single-product .woocommerce-product-gallery__image a {
+    display: block;
+    line-height: 0;
+}
+
+.single-product .woocommerce-product-gallery__image img {
+    width: 100% !important;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    display: block !important;
+    margin: 0 !important;
+}
+
+/* Badge Promocja — single */
+.single-product span.onsale {
+    background: var(--c-gold) !important;
+    color: #fff !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    padding: 0.35rem 0.8rem !important;
+    border-radius: 2px !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    line-height: 1 !important;
+}
+
+/* Summary — prawa kolumna */
+.single-product .summary.entry-summary {
+    padding-top: 0.5rem;
+}
+
+/* Cena — single */
+.single-product .summary p.price,
+.single-product .summary span.price {
+    font-size: 1.6rem;
+    color: var(--c-forest);
+    margin-bottom: 1.5rem;
+    display: block;
+    font-family: var(--font-body);
+}
+
+.single-product .summary p.price del,
+.single-product .summary span.price del {
+    opacity: 0.45;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    color: var(--c-text-light);
+}
+
+.single-product .summary p.price ins,
+.single-product .summary span.price ins {
+    text-decoration: none;
+    color: var(--c-fern);
+}
+
+/* Formularz dodawania do koszyka */
+.single-product form.cart {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.single-product form.cart .qty {
+    width: 64px;
+    height: 48px;
+    border: 1px solid rgba(45, 80, 22, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 0 0.75rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--c-text);
+    background: #fff;
+    text-align: center;
+}
+
+.single-product form.cart .single_add_to_cart_button {
+    flex: 1;
+    padding: 0.85rem 2rem;
+    background: var(--c-forest);
+    color: var(--c-cream);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+    box-shadow: none;
+}
+
+.single-product form.cart .single_add_to_cart_button:hover {
+    background: var(--c-moss);
+    transform: translateY(-1px);
+}
+
+/* Tabs */
+.single-product .woocommerce-tabs {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(45, 80, 22, 0.1);
+    clear: both;
+}
+
+.single-product .woocommerce-tabs ul.tabs {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(45, 80, 22, 0.1);
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs li {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li::before,
+.single-product .woocommerce-tabs ul.tabs li::after {
+    display: none !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li a {
+    display: block;
+    padding: 0.75rem 2rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--c-text-light);
+    transition: color var(--transition);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: transparent !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li.active a,
+.single-product .woocommerce-tabs ul.tabs li a:hover {
+    color: var(--c-forest);
+    border-bottom-color: var(--c-gold);
+    background: transparent !important;
+}
+
+.single-product .woocommerce-Tabs-panel {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.single-product .woocommerce-Tabs-panel h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--c-forest);
+    margin-bottom: 1rem;
+}
+
+.single-product .woocommerce-Tabs-panel p {
+    color: var(--c-text-light);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 680px;
+}
+
+/* Komentarze / recenzje */
+.single-product .comments-area {
+    margin-top: 3rem;
+    border-top: 1px solid rgba(45, 80, 22, 0.1);
+    padding-top: 2rem;
+}
+
+.single-product #reply-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--c-forest);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.single-product .comment-form label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-text-light);
+    margin-bottom: 0.4rem;
+    margin-top: 1rem;
+}
+
+.single-product .comment-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(45, 80, 22, 0.2);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--c-text);
+    background: #fff;
+    transition: border-color var(--transition);
+    resize: vertical;
+    min-height: 120px;
+}
+
+.single-product .comment-form textarea:focus {
+    outline: none;
+    border-color: var(--c-moss);
+}
+
+.single-product .form-submit {
+    margin-top: 1.25rem;
+}
+
+.single-product .form-submit input[type="submit"] {
+    padding: 0.75rem 2.5rem;
+    background: var(--c-forest);
+    color: var(--c-cream);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.single-product .form-submit input[type="submit"]:hover {
+    background: var(--c-moss);
+}
+
+.single-product .logged-in-as {
+    font-size: 0.85rem;
+    color: var(--c-text-light);
+    margin-bottom: 1.25rem;
+    margin-top: 0;
+}
+
+.single-product .logged-in-as a {
+    color: var(--c-gold);
+}
+
+.single-product .logged-in-as a:hover {
+    color: var(--c-earth);
+}
+
+/* Responsive — single product */
+@media (max-width: 900px) {
+    .single-product div.product {
+        grid-template-columns: 1fr;
+        gap: 2rem 0;
+    }
+}
+
+/* ============================================================
+   GCHemp — addon-v2.css
+   Dokleić NA KOŃCU istniejącego theme.css
+   Fixes: single product layout, header on subpages, shop tweaks
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════
+   HEADER — zawsze ciemnozielony na podstronach (nie-homepage)
+   Na home jest transparentny i przechodzi w scrolled przez JS
+══════════════════════════════════════════════════════════ */
+
+/* Każda strona poza home dostaje od razu scrolled tło */
+body:not(.home) .site-header {
+    background: rgba(26, 46, 15, 0.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 30px rgba(0,0,0,0.2);
+}
+
+/* ══════════════════════════════════════════════════════════
+   WSPÓLNY PADDING POD FIXED HEADER
+   Dotyczy sklep + single produkt
+══════════════════════════════════════════════════════════ */
+
+.woocommerce-shop #content,
+.single-product #content,
+.woocommerce-page:not(.home) #content {
+    padding-top: 80px;
+}
+
+/* ── Usuń zbędny padding z #primary który dodaliśmy wcześniej ── */
+/* (był w shop-product.css — nadpisujemy bardziej precyzyjnie) */
+#primary.content-area {
+    padding-top: 0;
+    padding-bottom: var(--space-xl);
+    min-height: 80vh;
+    background: var(--c-cream);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SKLEP — FIXES
+══════════════════════════════════════════════════════════ */
+
+/* Padding dla contentu strony sklep */
+.woocommerce-shop .entry-content,
+.woocommerce-shop .entry-header {
+    padding-top: 2rem;
+}
+
+/* Ukryj WC breadcrumbs (za mało treści na stronie sklepu) */
+.woocommerce-shop .woocommerce-breadcrumb { display: none; }
+
+/* Ukryj "Wyświetlanie X–X z X wyników" i sortowanie
+   jeśli wygląda źle — możesz zakomentować te dwie linie */
+.woocommerce-shop .woocommerce-result-count,
+.woocommerce-shop .woocommerce-ordering {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--c-text-light);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+.woocommerce-shop .woocommerce-ordering select {
+    border: 1px solid rgba(45,80,22,0.2);
+    border-radius: var(--radius-sm);
+    padding: 0.35rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    background: #fff;
+    color: var(--c-text);
+    outline: none;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SINGLE PRODUCT — GŁÓWNY FIX LAYOUTU
+
+   Problem: WC generuje strukturę:
+   article.post > .entry-header (h1) + .entry-content >
+     .woocommerce > .single-product > .container >
+       span.onsale + .woocommerce-product-gallery + .summary
+
+   .entry-header z h1 jest POZA .container więc wychodzi za ekran.
+   Fix: wymuś container na entry-header i popraw layout wewnątrz.
+══════════════════════════════════════════════════════════ */
+
+/* Owinięcie entry-header w container-like zachowanie */
+.single-product .entry-header {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+    width: 100%;
+}
+
+/* Ukryj zbędne meta (data, autor) */
+.single-product .entry-header .entry-meta,
+.single-product footer.entry-meta {
+    display: none;
+}
+
+/* Tytuł produktu h1 */
+.single-product .entry-header .entry-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--c-forest);
+    line-height: 1.1;
+    margin-bottom: 0;
+    padding-top: 0;
+}
+
+/* ── Kontener WC wewnątrz entry-content ─────────────── */
+
+/* .container bezpośrednio w #product-XX */
+.single-product #primary .woocommerce .container {
+    padding-top: 2rem;
+}
+
+/* Główny grid: galeria | summary */
+.single-product div.product,
+.single-product #product-61 {
+    /* WC nie daje nam bezpośrednio div.product —
+       zamiast tego grid robimy na .container wewnątrz #product-XX */
+}
+
+/* Wrapper galerii + summary jako grid */
+.single-product .woocommerce-product-gallery,
+.single-product .summary.entry-summary {
+    /* będą dziećmi .container — grid ustawiamy na .container */
+}
+
+/* Grid na .container w single product */
+.single-product .entry-content .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 0 4rem;
+    align-items: start;
+}
+
+/* Badge onsale — poza gridem, nad galerią */
+.single-product .entry-content .container > span.onsale {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    background: var(--c-gold) !important;
+    color: #fff !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    padding: 0.35rem 0.8rem !important;
+    border-radius: 2px !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    line-height: 1 !important;
+    width: fit-content;
+}
+
+/* Galeria — lewa kolumna */
+.single-product .woocommerce-product-gallery {
+    grid-column: 1 / 2;
+    grid-row: 2;
+    position: sticky !important;
+    top: 90px;
+    opacity: 1 !important;
+}
+
+/* Galeria główne zdjęcie */
+.single-product .woocommerce-product-gallery .woocommerce-product-gallery__image img {
+    width: 100% !important;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    display: block !important;
+    margin: 0 !important;
+}
+
+/* Summary — prawa kolumna */
+.single-product .summary.entry-summary {
+    grid-column: 2 / 3;
+    grid-row: 2;
+    padding-top: 0 !important;
+}
+
+/* Tabs — full width pod gridem */
+.single-product .woocommerce-tabs {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(45, 80, 22, 0.1);
+}
+
+/* ── Summary — szczegóły ────────────────────────────── */
+
+/* Tytuł produktu wewnątrz summary (WC dodaje go też tutaj) */
+.single-product .summary .product_title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--c-forest);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+}
+
+/* Złoty separator nad ceną */
+.single-product .summary .price {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    color: var(--c-forest);
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(45,80,22,0.1);
+}
+
+.single-product .summary .price del {
+    opacity: 0.4;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    color: var(--c-text-light);
+}
+
+.single-product .summary .price ins {
+    text-decoration: none;
+    color: var(--c-moss);
+    font-weight: 500;
+}
+
+/* Krótki opis */
+.single-product .summary .woocommerce-product-details__short-description {
+    color: var(--c-text-light);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+/* Formularz dodawania */
+.single-product .summary form.cart {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.single-product .summary form.cart .qty {
+    width: 64px;
+    height: 50px;
+    border: 1px solid rgba(45,80,22,0.25);
+    border-radius: var(--radius-sm);
+    padding: 0 0.75rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--c-text);
+    background: #fff;
+    text-align: center;
+    outline: none;
+    transition: border-color var(--transition);
+}
+
+.single-product .summary form.cart .qty:focus {
+    border-color: var(--c-moss);
+}
+
+.single-product .summary form.cart .single_add_to_cart_button {
+    flex: 1;
+    height: 50px;
+    background: var(--c-forest);
+    color: var(--c-cream) !important;
+    border: 1px solid var(--c-forest);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+
+.single-product .summary form.cart .single_add_to_cart_button:hover {
+    background: transparent;
+    color: var(--c-forest) !important;
+}
+
+/* Meta produktu (kategorie, tagi) */
+.single-product .summary .product_meta {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--c-text-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(45,80,22,0.08);
+}
+
+.single-product .summary .product_meta a {
+    color: var(--c-gold);
+    transition: color var(--transition);
+}
+
+.single-product .summary .product_meta a:hover {
+    color: var(--c-moss);
+}
+
+/* ── Tabs ────────────────────────────────────────────── */
+
+.single-product .woocommerce-tabs ul.tabs {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(45,80,22,0.1);
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs li {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li::before,
+.single-product .woocommerce-tabs ul.tabs li::after {
+    display: none !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li a {
+    display: block;
+    padding: 0.75rem 2rem 0.75rem 0;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--c-text-light);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: transparent !important;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.single-product .woocommerce-tabs ul.tabs li.active a,
+.single-product .woocommerce-tabs ul.tabs li a:hover {
+    color: var(--c-forest);
+    border-bottom-color: var(--c-gold);
+    background: transparent !important;
+}
+
+.single-product .woocommerce-Tabs-panel {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Ukryj zduplikowany h2 "Opis" w treści taba */
+.single-product .woocommerce-Tabs-panel--description h2 {
+    display: none;
+}
+
+.single-product .woocommerce-Tabs-panel p {
+    color: var(--c-text-light);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 680px;
+}
+
+/* ── Komentarze / sekcja pod produktem ──────────────── */
+
+.single-product .comments-area {
+    max-width: 1140px;
+    margin: 3rem auto 0;
+    padding: 2rem 2rem 4rem;
+    border-top: 1px solid rgba(45,80,22,0.1);
+}
+
+.single-product #reply-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--c-forest);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.single-product .comment-form p {
+    margin-bottom: 0;
+}
+
+.single-product .comment-form label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-text-light);
+    margin-bottom: 0.4rem;
+    margin-top: 1.25rem;
+}
+
+.single-product .comment-form textarea,
+.single-product .comment-form input[type="text"],
+.single-product .comment-form input[type="email"],
+.single-product .comment-form input[type="url"] {
+    width: 100%;
+    max-width: 680px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(45,80,22,0.2);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--c-text);
+    background: #fff;
+    transition: border-color var(--transition);
+    outline: none;
+}
+
+.single-product .comment-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.single-product .comment-form textarea:focus,
+.single-product .comment-form input:focus {
+    border-color: var(--c-moss);
+}
+
+.single-product .form-submit {
+    margin-top: 1.25rem;
+}
+
+.single-product .form-submit input[type="submit"] {
+    padding: 0.75rem 2.5rem;
+    background: var(--c-forest);
+    color: var(--c-cream);
+    border: 1px solid var(--c-forest);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.single-product .form-submit input[type="submit"]:hover {
+    background: transparent;
+    color: var(--c-forest);
+}
+
+.single-product .logged-in-as {
+    font-size: 0.82rem;
+    color: var(--c-text-light);
+    margin-bottom: 1.5rem;
+}
+
+.single-product .logged-in-as a { color: var(--c-gold); }
+.single-product .logged-in-as a:hover { color: var(--c-moss); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — single product
+══════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+    .single-product .entry-content .container {
+        grid-template-columns: 1fr;
+        gap: 2rem 0;
+    }
+
+    .single-product .woocommerce-product-gallery {
+        grid-column: 1;
+        grid-row: 2;
+        position: static !important;
+    }
+
+    .single-product .summary.entry-summary {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .single-product .woocommerce-tabs {
+        grid-row: 4;
+    }
+
+    .single-product .entry-content .container > span.onsale {
+        grid-row: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .single-product .entry-header {
+        padding: 1.5rem 1rem 0;
+    }
+
+    .single-product .summary form.cart {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .single-product .summary form.cart .qty {
+        width: 100%;
+    }
+}
+
+/* ── Single product — korzysta z zewnętrznego .container ── */
+
+/* Zewnętrzny container (z content-single.php) */
+.single-product .entry-content > .container {
+    padding-top: 2rem;
+    padding-bottom: 0;
+}
+
+/* Layout grid — bezpośrednio bez własnego container */
+.gchemp-product-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 5rem;
+    align-items: start;
+    /* BEZ max-width, margin:auto, padding — to ogarnia rodzic .container */
+}
+
+/* Reszta .gchemp-product-gallery i .gchemp-product-summary
+   zostaje bez zmian z addon-v3.css */
+
+/* Tabs i komentarze — wyrównaj do szerokości zewnętrznego containera */
+.single-product .woocommerce-tabs,
+.single-product #comments {
+    max-width: unset;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Tabs wewnątrz zewnętrznego .container */
+.single-product .entry-content > .container ~ .woocommerce-tabs {
+    max-width: 1140px;
+    margin: 3rem auto 0;
+    padding: 0 2rem 2rem;
+}
+
+@media (max-width: 900px) {
+    .gchemp-product-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem 0;
+    }
+
+    .gchemp-product-gallery {
+        position: static;
+    }
+}
+
+/* ============================================================
+   GCHemp — addon-v4.css
+   Dokleić NA KOŃCU theme.css
+   Zakłada strukturę:
+   .entry-content > .container > the_content() >
+     div#product-XX > .gchemp-product-layout (bez .container)
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════
+   RESET poprzednich prób — wyczyść konflikty
+══════════════════════════════════════════════════════════ */
+
+.single-product .entry-content .container,
+.single-product .woocommerce .container,
+.single-product div[id^="product-"] > .container,
+.single-product .entry-content > .container {
+    display: block !important;
+    grid-template-columns: unset !important;
+    padding-top: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENTRY-CONTENT CONTAINER — padding top pod fixed header
+══════════════════════════════════════════════════════════ */
+
+.single-product .entry-content > .container {
+    padding-top: 2.5rem !important;
+    padding-bottom: 0 !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   #product-XX — usuń domyślne WC marginesy
+══════════════════════════════════════════════════════════ */
+
+.single-product div[id^="product-"] {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   GCHEMP PRODUCT LAYOUT — grid galeria | summary
+   Nie ma własnego .container — korzysta z rodzica
+══════════════════════════════════════════════════════════ */
+
+.gchemp-product-layout {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 5rem;
+    align-items: start;
+}
+
+/* ── Galeria — lewa kolumna ─────────────────────────────── */
+
+.gchemp-product-gallery {
+    position: sticky;
+    top: 90px;
+}
+
+.gchemp-product-gallery .onsale {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    display: inline-block !important;
+    margin-bottom: 0.75rem !important;
+    background: var(--c-gold) !important;
+    color: #fff !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    padding: 0.35rem 0.8rem !important;
+    border-radius: 2px !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    line-height: 1 !important;
+}
+
+.gchemp-product-gallery .woocommerce-product-gallery {
+    opacity: 1 !important;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin: 0 !important;
+    float: none !important;
+    width: 100% !important;
+}
+
+.gchemp-product-gallery .woocommerce-product-gallery__image img.wp-post-image {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: var(--radius-md);
+    display: block !important;
+    margin: 0 !important;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+}
+
+.gchemp-product-gallery .woocommerce-product-gallery__trigger {
+    top: 1rem !important;
+    right: 1rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(245,240,232,0.9) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* ── Summary — prawa kolumna ────────────────────────────── */
+
+.gchemp-product-summary {
+    padding-top: 0.25rem;
+}
+
+.gchemp-product-summary::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--c-gold);
+    margin-bottom: 1.5rem;
+}
+
+.gchemp-product-summary .product_title {
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.8rem, 3vw, 2.6rem) !important;
+    color: var(--c-forest) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0.5rem !important;
+    font-weight: 600 !important;
+}
+
+.gchemp-product-summary .woocommerce-product-rating {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.gchemp-product-summary .star-rating {
+    color: var(--c-gold) !important;
+}
+
+.gchemp-product-summary p.price,
+.gchemp-product-summary span.price {
+    display: block !important;
+    font-family: var(--font-body) !important;
+    font-size: 1.6rem !important;
+    color: var(--c-forest) !important;
+    margin: 1.25rem 0 !important;
+    padding: 1.25rem 0 !important;
+    border-top: 1px solid rgba(45,80,22,0.1) !important;
+    border-bottom: 1px solid rgba(45,80,22,0.1) !important;
+    line-height: 1 !important;
+}
+
+.gchemp-product-summary p.price del,
+.gchemp-product-summary span.price del {
+    opacity: 0.4;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    color: var(--c-text-light);
+}
+
+.gchemp-product-summary p.price ins,
+.gchemp-product-summary span.price ins {
+    text-decoration: none;
+    color: var(--c-moss);
+    font-weight: 500;
+}
+
+.gchemp-product-summary .woocommerce-product-details__short-description {
+    color: var(--c-text-light);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 1.75rem;
+}
+
+.gchemp-product-summary form.cart {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.gchemp-product-summary form.cart .qty {
+    width: 64px;
+    height: 50px;
+    border: 1px solid rgba(45,80,22,0.25);
+    border-radius: var(--radius-sm);
+    padding: 0 0.75rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--c-text);
+    background: #fff;
+    text-align: center;
+    outline: none;
+    transition: border-color var(--transition);
+    -moz-appearance: textfield;
+}
+
+.gchemp-product-summary form.cart .qty:focus {
+    border-color: var(--c-moss);
+}
+
+.gchemp-product-summary form.cart .single_add_to_cart_button {
+    flex: 1;
+    height: 50px;
+    background: var(--c-forest);
+    color: var(--c-cream) !important;
+    border: 1px solid var(--c-forest);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+    box-shadow: none;
+}
+
+.gchemp-product-summary form.cart .single_add_to_cart_button:hover {
+    background: transparent;
+    color: var(--c-forest) !important;
+}
+
+.gchemp-product-summary .product_meta {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--c-text-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(45,80,22,0.08);
+}
+
+.gchemp-product-summary .product_meta a {
+    color: var(--c-gold);
+    transition: color var(--transition);
+}
+
+.gchemp-product-summary .product_meta a:hover {
+    color: var(--c-moss);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TABS — poza .container, wyrównaj ręcznie
+══════════════════════════════════════════════════════════ */
+
+.single-product .woocommerce-tabs.wc-tabs-wrapper {
+    max-width: 1140px;
+    margin: 3rem auto 0;
+    padding: 2rem 2rem 0;
+    border-top: 1px solid rgba(45,80,22,0.1);
+}
+
+.single-product .woocommerce-tabs ul.tabs.wc-tabs {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(45,80,22,0.1);
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs li {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li::before,
+.single-product .woocommerce-tabs ul.tabs li::after {
+    display: none !important;
+}
+
+.single-product .woocommerce-tabs ul.tabs li a {
+    display: block;
+    padding: 0.75rem 2rem 0.75rem 0;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--c-text-light);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: transparent !important;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.single-product .woocommerce-tabs ul.tabs li.active a,
+.single-product .woocommerce-tabs ul.tabs li a:hover {
+    color: var(--c-forest);
+    border-bottom-color: var(--c-gold);
+    background: transparent !important;
+}
+
+.single-product .woocommerce-Tabs-panel {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.single-product .woocommerce-Tabs-panel--description h2 {
+    display: none;
+}
+
+.single-product .woocommerce-Tabs-panel p {
+    color: var(--c-text-light);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 680px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   KOMENTARZE
+══════════════════════════════════════════════════════════ */
+
+.single-product #comments {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    border-top: 1px solid rgba(45,80,22,0.1);
+}
+
+.single-product #reply-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--c-forest);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.single-product .comment-form label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-text-light);
+    margin-bottom: 0.4rem;
+    margin-top: 1.25rem;
+}
+
+.single-product .comment-form textarea {
+    width: 100%;
+    max-width: 680px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(45,80,22,0.2);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--c-text);
+    background: #fff;
+    transition: border-color var(--transition);
+    outline: none;
+    min-height: 120px;
+    resize: vertical;
+}
+
+.single-product .comment-form textarea:focus {
+    border-color: var(--c-moss);
+}
+
+.single-product .form-submit {
+    margin-top: 1.25rem;
+}
+
+.single-product .form-submit input[type="submit"] {
+    padding: 0.75rem 2.5rem;
+    background: var(--c-forest);
+    color: var(--c-cream);
+    border: 1px solid var(--c-forest);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.single-product .form-submit input[type="submit"]:hover {
+    background: transparent;
+    color: var(--c-forest);
+}
+
+.single-product .logged-in-as {
+    font-size: 0.82rem;
+    color: var(--c-text-light);
+    margin-bottom: 1.5rem;
+}
+
+.single-product .logged-in-as a { color: var(--c-gold); }
+.single-product .logged-in-as a:hover { color: var(--c-moss); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+    .gchemp-product-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem 0;
+    }
+
+    .gchemp-product-gallery {
+        position: static;
+    }
+
+    .gchemp-product-summary form.cart {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .gchemp-product-summary form.cart .qty {
+        width: 100%;
+    }
+
+    .single-product .woocommerce-tabs.wc-tabs-wrapper,
+    .single-product #comments {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Kup teraz — karta sklepu */
+.woocommerce ul.products li.product a.gchemp-buy-now {
+    display: block !important;
+    width: calc(100% - 2.5rem) !important;
+    margin: 0 1.25rem 1.25rem !important;
+    padding: 0.65rem 1rem !important;
+    background: var(--c-forest) !important;
+    border: 1px solid var(--c-forest) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--c-cream) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.7rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    transition: background var(--transition), color var(--transition) !important;
+}
+
+.woocommerce ul.products li.product a.gchemp-buy-now:hover {
+    background: transparent !important;
+    color: var(--c-forest) !important;
+}
+
+
+/* ── Buttons (shared) ─────────────────────────────────── */
+.btn {
+    display: inline-block;
+    padding: 0.85rem 2.25rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+.btn-primary { background: var(--c-forest); color: var(--c-cream); border: 1px solid var(--c-forest); }
+.btn-primary:hover { background: transparent; color: var(--c-forest); transform: translateY(-1px); }
+
+/* ── Contact section ──────────────────────────────────── */
+.contact-section { padding: var(--space-xl) 0; background: var(--c-parchment); }
+.contact-form { max-width: 620px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+.contact-form-row label {
+    display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--c-text-light); margin-bottom: 0.4rem;
+}
+.contact-form-row input,
+.contact-form-row textarea {
+    width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(45,80,22,0.2);
+    border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.95rem;
+    color: var(--c-text); background: #fff; outline: none; transition: border-color var(--transition);
+}
+.contact-form-row input:focus,
+.contact-form-row textarea:focus { border-color: var(--c-moss); }
+.contact-form-row textarea { min-height: 150px; resize: vertical; }
+.contact-flash { max-width: 620px; margin: 0 auto 1.5rem; padding: 0.9rem 1.25rem; border-radius: var(--radius-sm); font-size: 0.9rem; }
+.contact-flash--success { background: rgba(74,124,47,.12); color: var(--c-moss); border: 1px solid rgba(74,124,47,.3); }
+.contact-flash--error   { background: rgba(184,60,42,.1); color: #8a2f1f; border: 1px solid rgba(184,60,42,.3); }

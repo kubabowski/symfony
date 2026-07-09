@@ -1,2 +1,36 @@
-contact Section
-use avaiable fields from content model fields
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="section-header">
+            <p class="section-subtitle">{{ section.title }}</p>
+        </div>
+
+        {% for message in app.flashes('contact_success') %}
+            <div class="contact-flash contact-flash--success">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('contact_error') %}
+            <div class="contact-flash contact-flash--error">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(contact_form, { action: path('contact_submit'), attr: { class: 'contact-form' } }) }}
+        {{ form_widget(contact_form.returnSlug, { value: page is defined ? page.slug : null }) }}
+
+        <div class="contact-form-row">
+            {{ form_label(contact_form.name, 'Your name') }}
+            {{ form_widget(contact_form.name) }}
+            {{ form_errors(contact_form.name) }}
+        </div>
+        <div class="contact-form-row">
+            {{ form_label(contact_form.email, 'Your email') }}
+            {{ form_widget(contact_form.email) }}
+            {{ form_errors(contact_form.email) }}
+        </div>
+        <div class="contact-form-row">
+            {{ form_label(contact_form.message, 'Message') }}
+            {{ form_widget(contact_form.message) }}
+            {{ form_errors(contact_form.message) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send message</button>
+        {{ form_end(contact_form) }}
+    </div>
+</section>

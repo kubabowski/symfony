@@ -1,44 +1,22 @@
-<section class="hero">
-    <h1>{{ section.title }}</h1>
-    {% if section.body %}
-        <p>{{ section.body }}</p>
-    {% endif %}
-</section>
-
-{#following content is from another project copied from wordpress, I want this on to look exactly like this one
-
-<section class="hero" style="background-image: url('<?php echo esc_url( $hero['background_url'] ); ?>')">
-
+<section class="hero" style="{% if section.image1 %}background-image:url('/uploads/content/{{ section.image1 }}');{% endif %}">
     <div class="hero-overlay"></div>
-
     <div class="container">
-        <div class="hero-content">
+        <div class="hero-content reveal">
+            {% if section.image2 %}
+                <img src="/uploads/content/{{ section.image2 }}" class="hero-logo" alt="{{ section.text1 ?? section.title }}">
+            {% endif %}
 
-            <?php if ( $hero['logo_url'] ) : ?>
-                <img src="<?php echo esc_url( $hero['logo_url'] ); ?>"
-                     class="hero-logo"
-                     alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-            <?php endif; ?>
+            <h1 class="hero-title">{{ section.text1 ?? section.title }}</h1>
 
-            <h1 class="hero-title">
-                <?php echo $hero['text1']; ?>
-            </h1>
+            {% if section.text2 %}
+                <p class="hero-tagline">{{ section.text2 }}</p>
+            {% endif %}
 
-            <p class="hero-tagline">
-                <h2><?php echo $hero['text2']; ?></h2>
-            </p>
-
-            <?php if ( $hero['button_url'] ) : ?>
-                <a href="<?php echo esc_url( $hero['button_url'] ); ?>" class="btn btn-primary">
-                    <?php esc_html_e( 'Poznaj Nas', 'your-theme' ); ?>
+            {% if section.btnText1 and section.btnLink1 %}
+                <a href="{{ section.btnLink1 }}" class="btn btn-primary" style="display:inline-block;margin-top:2rem;">
+                    {{ section.btnText1 }}
                 </a>
-            <?php endif; ?>
-
+            {% endif %}
         </div>
     </div>
-
 </section>
-
-
-
-#}

@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{{ page.title }}{% endblock %}
-
 {% block body %}
     {% for section in page.children %}
         {% if section.isActive %}
-            {{ include('content/sections/' ~ (section.type ?? 'default') ~ '.html.twig', { section: section }, ignore_missing = true) }}
+            {{ include('content/sections/' ~ (section.type ?? 'default') ~ '.html.twig', {
+                section: section,
+                page: page,
+                contact_form: contact_form,
+            }, ignore_missing = true) }}
         {% endif %}
     {% endfor %}
 {% endblock %}

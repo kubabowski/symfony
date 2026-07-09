@@ -1,39 +1,34 @@
-
-
-{#following content is from another project copied from wordpress, I want this on to look exactly like this one
-
-<section id="product" class="product-section">
+<section class="product-section">
     <div class="container">
-
         <div class="product-grid">
-
-            <?php if ( $product['image_url'] ) : ?>
-                <img src="<?php echo esc_url( $product['image_url'] ); ?>"
-                     alt="<?php echo esc_attr( $product['header'] ); ?>">
-            <?php endif; ?>
+            {% if section.image1 %}
+                <img src="/uploads/content/{{ section.image1 }}" alt="{{ section.text1 ?? section.title }}">
+            {% endif %}
 
             <div class="product-content">
+                <h2>{{ section.text1 ?? section.title }}</h2>
+                {% if section.text2 %}<p>{{ section.text2 }}</p>{% endif %}
+                {% if section.text3 %}<p>{{ section.text3 }}</p>{% endif %}
 
-                <h2><?php echo  $product['header']; ?></h2>
-
-                <p><?php echo $product['desc']; ?></p>
-
-                <?php if ( $product['text'] ) : ?>
-                    <p><?php echo  $product['text']; ?></p>
-                <?php endif; ?>
-
-                <?php if ( ! empty( $product['features'] ) ) : ?>
+                {% if section.text4 %}
                     <ul class="product-features">
-                        <?php foreach ( $product['features'] as $feature ) : ?>
-                            <li><?php echo $feature; ?></li>
-                        <?php endforeach; ?>
+                        {% for feature in section.text4|split('\n')|filter(f => f|trim is not empty) %}
+                            <li class="feature-item">
+                                <svg class="feature-icon" viewBox="0 0 20 20" fill="none">
+                                    <path d="M4 10l4 4 8-8" stroke="#2d5016" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                {{ feature|trim }}
+                            </li>
+                        {% endfor %}
                     </ul>
-                <?php endif; ?>
+                {% endif %}
 
+                {% if section.btnText1 and section.btnLink1 %}
+                    <a href="{{ section.btnLink1 }}" class="btn btn-primary" style="margin-top:2rem;display:inline-block;">
+                        {{ section.btnText1 }}
+                    </a>
+                {% endif %}
             </div>
         </div>
-
     </div>
 </section>
-
-#}

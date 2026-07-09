@@ -39,6 +39,7 @@ final class ContentController extends AbstractController
 
         return $this->render('content/show.html.twig', [
             'page' => $page,
+            'contact_form' => $this->createForm(ContactType::class)->createView(),
         ]);
     }
 }

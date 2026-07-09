@@ -1,111 +1,39 @@
-<section class="about">
-    <h2>{{ section.title }}</h2>
-    {% if section.body %}
-        <div>{{ section.body|raw }}</div>
-    {% endif %}
-</section>
+{% set slides = [
+    { image: section.image1, header: section.text2, text: section.text3 },
+    { image: section.image2, header: section.text4, text: section.text5 },
+    { image: section.image3, header: section.text6, text: null },
+    { image: section.image4, header: null, text: null },
+]|filter(s => s.image or s.header or s.text) %}
 
-
-{#following content is from another project copied from wordpress, I want this on to look exactly like this one
-<section id="about" class="about-section">
+<section class="about-section">
     <div class="container">
+        {% if section.text1 %}
+            <div class="section-header">
+                <p class="section-subtitle">{{ section.text1 }}</p>
+            </div>
+        {% endif %}
 
-        <div class="section-header">
-            <p class="section-subtitle">
-                <?php echo esc_html( $about['text1'] ); ?>
-            </p>
-        </div>
-
-        <?php if ( ! empty( $about['slides'] ) ) : ?>
-            <div class="swiper about-swiper">
+        {% if slides|length > 0 %}
+            <div class="swiper about-swiper" data-controller="swiper">
                 <div class="swiper-wrapper">
-
-                    <?php foreach ( $about['slides'] as $slide ) : ?>
+                    {% for slide in slides %}
                         <article class="swiper-slide">
                             <div class="slide-content">
-
-                                <?php if ( ! empty( $slide['image_url'] ) ) : ?>
-                                    <img
-                                            src="<?php echo esc_url( $slide['image_url'] ); ?>"
-                                            alt="<?php  $slide['header']; ?>"
-                                    >
-                                <?php endif; ?>
-
+                                {% if slide.image %}
+                                    <img src="/uploads/content/{{ slide.image }}" alt="{{ slide.header }}">
+                                {% endif %}
                                 <div class="slide-text">
-<!--                                    <h3>--><?php //echo esc_html( $slide['header'] ); ?><!--</h3>-->
-                                    <h3><?php echo $slide['header'] ; ?></h3>
-                                    <p><?php echo  $slide['text'] ; ?></p>
+                                    {% if slide.header %}<h3>{{ slide.header }}</h3>{% endif %}
+                                    {% if slide.text %}<p>{{ slide.text }}</p>{% endif %}
                                 </div>
-
                             </div>
                         </article>
-                    <?php endforeach; ?>
-
+                    {% endfor %}
                 </div>
-
-                <!-- Navigation -->
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
-
-                <!-- Pagination -->
                 <div class="swiper-pagination"></div>
             </div>
-        <?php endif; ?>
-
+        {% endif %}
     </div>
 </section>
-
-<script>
-    document.addEventListener( 'DOMContentLoaded', function () {
-        new Swiper( '.about-swiper', {
-            // Layout
-            slidesPerView: 1,
-            spaceBetween: 32,
-
-            // Loop
-            loop: false,
-
-            // Autoplay (remove block to disable)
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-            },
-
-            // Smooth transition
-            speed: 600,
-            effect: 'slide',
-
-            // Pagination dots
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-
-            // Prev / Next arrows
-            navigation: {
-                prevEl: '.swiper-button-prev',
-                nextEl: '.swiper-button-next',
-            },
-
-            // Keyboard & a11y
-            keyboard: { enabled: true },
-            a11y: { enabled: true },
-            slidesPerView: 1,
-            spaceBetween: 24,
-            // Responsive breakpoints
-            // breakpoints: {
-            //     640: {
-            //         slidesPerView: 2,
-            //         spaceBetween: 24,
-            //     },
-            //     1024: {
-            //         slidesPerView: 3,
-            //         spaceBetween: 32,
-            //     },
-            // },
-        } );
-    } );
-</script>
-
-#}

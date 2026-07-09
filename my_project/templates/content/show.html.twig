@@ -1,3 +1,7 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
 {% block body %}
     {% for section in page.children %}
         {% if section.isActive %}

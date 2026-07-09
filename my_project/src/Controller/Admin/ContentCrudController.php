@@ -23,6 +23,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 
 class ContentCrudController extends AbstractCrudController
 {
@@ -98,6 +99,8 @@ class ContentCrudController extends AbstractCrudController
 
         return $content;
     }
+
+
 
     public function configureActions(Actions $actions): Actions
     {

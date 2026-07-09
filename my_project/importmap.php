@@ -16,12 +16,12 @@ return [
         'path' => './assets/admin.js',
         'entrypoint' => true,
     ],
-    'front' => [
-        'path' => './assets/front.js',
-        'entrypoint' => true,
-    ],
     'app' => [
         'path' => './assets/app.js',
+        'entrypoint' => true,
+    ],
+    'front' => [
+        'path' => './assets/front.js',
         'entrypoint' => true,
     ],
     '@hotwired/stimulus' => [

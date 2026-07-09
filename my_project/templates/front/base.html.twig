@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}GCHemp{% endblock %}</title>
+    {{ importmap('front') }}
+</head>
+<body class="{{ app.request.attributes.get('_route') == 'homepage' ? 'home' : '' }}">
+<header class="site-header">
+    <div class="container header-container">
+        <div class="site-logo">
+            <a href="{{ path('content_index') }}">GCHemp</a>
+        </div>
+        <nav class="main-navigation">
+            <ul>
+                <li><a href="{{ path('content_index') }}">Pages</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main id="content">
+    {% block body %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <p class="site-info">&copy; {{ 'now'|date('Y') }} GCHemp</p>
+    </div>
+</footer>
+</body>
+</html>

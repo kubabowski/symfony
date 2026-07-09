@@ -4,3 +4,108 @@
         <div>{{ section.body|raw }}</div>
     {% endif %}
 </section>
+
+
+{#following content is from another project copied from wordpress, I want this on to look exactly like this one
+<section id="about" class="about-section">
+    <div class="container">
+
+        <div class="section-header">
+            <p class="section-subtitle">
+                <?php echo esc_html( $about['text1'] ); ?>
+            </p>
+        </div>
+
+        <?php if ( ! empty( $about['slides'] ) ) : ?>
+            <div class="swiper about-swiper">
+                <div class="swiper-wrapper">
+
+                    <?php foreach ( $about['slides'] as $slide ) : ?>
+                        <article class="swiper-slide">
+                            <div class="slide-content">
+
+                                <?php if ( ! empty( $slide['image_url'] ) ) : ?>
+                                    <img
+                                            src="<?php echo esc_url( $slide['image_url'] ); ?>"
+                                            alt="<?php  $slide['header']; ?>"
+                                    >
+                                <?php endif; ?>
+
+                                <div class="slide-text">
+<!--                                    <h3>--><?php //echo esc_html( $slide['header'] ); ?><!--</h3>-->
+                                    <h3><?php echo $slide['header'] ; ?></h3>
+                                    <p><?php echo  $slide['text'] ; ?></p>
+                                </div>
+
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+
+                </div>
+
+                <!-- Navigation -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        <?php endif; ?>
+
+    </div>
+</section>
+
+<script>
+    document.addEventListener( 'DOMContentLoaded', function () {
+        new Swiper( '.about-swiper', {
+            // Layout
+            slidesPerView: 1,
+            spaceBetween: 32,
+
+            // Loop
+            loop: false,
+
+            // Autoplay (remove block to disable)
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+
+            // Smooth transition
+            speed: 600,
+            effect: 'slide',
+
+            // Pagination dots
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            // Prev / Next arrows
+            navigation: {
+                prevEl: '.swiper-button-prev',
+                nextEl: '.swiper-button-next',
+            },
+
+            // Keyboard & a11y
+            keyboard: { enabled: true },
+            a11y: { enabled: true },
+            slidesPerView: 1,
+            spaceBetween: 24,
+            // Responsive breakpoints
+            // breakpoints: {
+            //     640: {
+            //         slidesPerView: 2,
+            //         spaceBetween: 24,
+            //     },
+            //     1024: {
+            //         slidesPerView: 3,
+            //         spaceBetween: 32,
+            //     },
+            // },
+        } );
+    } );
+</script>
+
+#}

@@ -4,3 +4,41 @@
         <p>{{ section.body }}</p>
     {% endif %}
 </section>
+
+{#following content is from another project copied from wordpress, I want this on to look exactly like this one
+
+<section class="hero" style="background-image: url('<?php echo esc_url( $hero['background_url'] ); ?>')">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+        <div class="hero-content">
+
+            <?php if ( $hero['logo_url'] ) : ?>
+                <img src="<?php echo esc_url( $hero['logo_url'] ); ?>"
+                     class="hero-logo"
+                     alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+            <?php endif; ?>
+
+            <h1 class="hero-title">
+                <?php echo $hero['text1']; ?>
+            </h1>
+
+            <p class="hero-tagline">
+                <h2><?php echo $hero['text2']; ?></h2>
+            </p>
+
+            <?php if ( $hero['button_url'] ) : ?>
+                <a href="<?php echo esc_url( $hero['button_url'] ); ?>" class="btn btn-primary">
+                    <?php esc_html_e( 'Poznaj Nas', 'your-theme' ); ?>
+                </a>
+            <?php endif; ?>
+
+        </div>
+    </div>
+
+</section>
+
+
+
+#}

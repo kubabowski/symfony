@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}GCHemp{% endblock %}</title>
     {{ importmap('front') }}
+    {% block stylesheets %}
 </head>
 <body class="{{ app.request.attributes.get('_route') == 'homepage' ? 'home' : '' }}">
 <header class="site-header">

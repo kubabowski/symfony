@@ -1,0 +1,17 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Order confirmed{% endblock %}
+
+{% block body %}
+    <section class="order-status-section order-status-success">
+        <div class="container">
+            <div class="order-status-box">
+                <div class="order-status-icon">✓</div>
+                <h1>Thank you, {{ order.customerName }}!</h1>
+                <p>Your order #{{ order.id }} for <strong>{{ order.product.name }}</strong> has been received.</p>
+                <p class="order-status-total">Total: {{ order.totalPrice }} USD</p>
+                <a href="{{ path('shop_product', { slug: order.product.slug }) }}" class="btn btn-primary">Back to product</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

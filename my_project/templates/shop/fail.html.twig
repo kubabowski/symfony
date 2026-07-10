@@ -1,0 +1,16 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Payment failed{% endblock %}
+
+{% block body %}
+    <section class="order-status-section order-status-fail">
+        <div class="container">
+            <div class="order-status-box">
+                <div class="order-status-icon">✕</div>
+                <h1>Payment failed</h1>
+                <p>Something went wrong while processing order #{{ order.id }}. Please try again.</p>
+                <a href="{{ path('shop_checkout', { slug: order.product.slug }) }}" class="btn btn-primary">Try again</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

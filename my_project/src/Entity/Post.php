@@ -41,6 +41,9 @@ class Post
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'posts')]
+    private Collection $products;
+
     /**
      * @var Collection<int, Tag>
      */

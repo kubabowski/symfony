@@ -1,0 +1,75 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Checkout — {{ product.name }}{% endblock %}
+
+{% block body %}
+    <section class="checkout-section">
+        <div class="container checkout-container">
+            <div class="checkout-summary">
+                <h2>Order summary</h2>
+                <div class="checkout-product">
+                    {% if product.image %}
+                        <img src="/uploads/products/{{ product.image }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <div>
+                        <p class="checkout-product-name">{{ product.name }}</p>
+                        <p class="checkout-product-price">{{ product.price }} USD</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-form-wrap">
+                <h1>Your details</h1>
+
+                {{ form_start(checkout_form, { attr: { class: 'checkout-form' } }) }}
+                <div class="checkout-form-row">
+                    {{ form_label(checkout_form.customerName) }}
+                    {{ form_widget(checkout_form.customerName) }}
+                    {{ form_errors(checkout_form.customerName) }}
+                </div>
+                <div class="checkout-form-row">
+                    {{ form_label(checkout_form.customerEmail) }}
+                    {{ form_widget(checkout_form.customerEmail) }}
+                    {{ form_errors(checkout_form.customerEmail) }}
+                </div>
+                <div class="checkout-form-row">
+                    {{ form_label(checkout_form.customerPhone) }}
+                    {{ form_widget(checkout_form.customerPhone) }}
+                    {{ form_errors(checkout_form.customerPhone) }}
+                </div>
+                <div class="checkout-form-row">
+                    {{ form_label(checkout_form.addressLine1) }}
+                    {{ form_widget(checkout_form.addressLine1) }}
+                    {{ form_errors(checkout_form.addressLine1) }}
+                </div>
+                <div class="checkout-form-row">
+                    {{ form_label(checkout_form.addressLine2) }}
+                    {{ form_widget(checkout_form.addressLine2) }}
+                    {{ form_errors(checkout_form.addressLine2) }}
+                </div>
+
+                <div class="checkout-form-grid">
+                    <div class="checkout-form-row">
+                        {{ form_label(checkout_form.city) }}
+                        {{ form_widget(checkout_form.city) }}
+                        {{ form_errors(checkout_form.city) }}
+                    </div>
+                    <div class="checkout-form-row">
+                        {{ form_label(checkout_form.postalCode) }}
+                        {{ form_widget(checkout_form.postalCode) }}
+                        {{ form_errors(checkout_form.postalCode) }}
+                    </div>
+                </div>
+
+                <div class="checkout-form-row">
+                    {{ form_label(checkout_form.country) }}
+                    {{ form_widget(checkout_form.country) }}
+                    {{ form_errors(checkout_form.country) }}
+                </div>
+
+                <button type="submit" class="btn btn-primary checkout-submit-btn">Kup teraz</button>
+                {{ form_end(checkout_form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

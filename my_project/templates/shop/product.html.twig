@@ -1,0 +1,30 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+    <section class="product-page">
+        <div class="container product-page-grid">
+            <div class="product-page-gallery">
+                {% if product.image %}
+                    <img src="/uploads/products/{{ product.image }}" alt="{{ product.name }}">
+                {% endif %}
+            </div>
+
+            <div class="product-page-summary">
+                <h1>{{ product.name }}</h1>
+                <p class="product-page-price">{{ product.price }} USD</p>
+
+                {% if product.description %}
+                    <div class="product-page-description">{{ product.description|nl2br }}</div>
+                {% endif %}
+
+                {% if product.stock > 0 %}
+                    <a href="{{ path('shop_checkout', { slug: product.slug }) }}" class="btn btn-primary product-buy-btn">Kup teraz</a>
+                {% else %}
+                    <p class="product-out-of-stock">Currently out of stock</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

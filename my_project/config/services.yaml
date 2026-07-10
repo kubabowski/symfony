@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+  przelewy24.merchant_id: '%env(P24_MERCHANT_ID)%'
+  przelewy24.pos_id: '%env(P24_POS_ID)%'
+  przelewy24.api_key: '%env(P24_API_KEY)%'
+  przelewy24.crc_key: '%env(P24_CRC_KEY)%'
+  przelewy24.sandbox: '%env(bool:P24_SANDBOX)%'
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +24,14 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    App\Service\Przelewy24Service:
+      arguments:
+        $merchantId: '%przelewy24.merchant_id%'
+        $posId: '%przelewy24.pos_id%'
+        $apiKey: '%przelewy24.api_key%'
+        $crcKey: '%przelewy24.crc_key%'
+        $sandbox: '%przelewy24.sandbox%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -58,6 +58,15 @@ class ShopOrder
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(length: 100, nullable: true, unique: true)]
+    private ?string $przelewy24SessionId = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $przelewy24OrderId = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $amountGrosze = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -103,4 +112,13 @@ class ShopOrder
 
     public function getCreatedAt(): ?\DateTimeImmutable { return $this->createdAt; }
     public function setCreatedAt(\DateTimeImmutable $createdAt): static { $this->createdAt = $createdAt; return $this; }
+
+    public function getPrzelewy24SessionId(): ?string { return $this->przelewy24SessionId; }
+    public function setPrzelewy24SessionId(?string $przelewy24SessionId): static { $this->przelewy24SessionId = $przelewy24SessionId; return $this; }
+
+    public function getPrzelewy24OrderId(): ?int { return $this->przelewy24OrderId; }
+    public function setPrzelewy24OrderId(?int $przelewy24OrderId): static { $this->przelewy24OrderId = $przelewy24OrderId; return $this; }
+
+    public function getAmountGrosze(): ?int { return $this->amountGrosze; }
+    public function setAmountGrosze(?int $amountGrosze): static { $this->amountGrosze = $amountGrosze; return $this; }
 }

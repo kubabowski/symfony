@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\Przelewy24Service;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ShopController extends AbstractController
 {
@@ -19,6 +21,7 @@ final class ShopController extends AbstractController
         private readonly ProductRepository $productRepository,
         private readonly ShopOrderRepository $shopOrderRepository,
         private readonly EntityManagerInterface $entityManager,
+        private readonly Przelewy24Service $przelewy24Service,
     ) {
     }
 
@@ -59,9 +62,21 @@ final class ShopController extends AbstractController
             $this->entityManager->persist($order);
             $this->entityManager->flush();
 
-            // TODO: hook up real payment gateway here.
-            // For now we redirect straight to the success page.
-            return $this->redirectToRoute('shop_success', ['id' => $order->getId()]);
+            $returnUrl = $this->generateUrl('shop_payment_return', ['id' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $statusUrl = $this->generateUrl('shop_payment_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            try {
+                $token = $this->przelewy24Service->registerTransaction($order, $returnUrl, $statusUrl);
+            } catch (\Throwable $e) {
+                $order->setStatus(ShopOrder::STATUS_FAILED);
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('shop_fail', ['id' => $order->getId()]);
+            }
+
+            $this->entityManager->flush(); // persists sessionId/amountGrosze set by registerTransaction()
+
+            return $this->redirect($this->przelewy24Service->getPaymentPageBaseUrl() . $token);
         }
 
         return $this->render('shop/checkout.html.twig', [
@@ -96,5 +111,46 @@ final class ShopController extends AbstractController
         return $this->render('shop/fail.html.twig', [
             'order' => $order,
         ]);
+    }
+
+    #[Route('/order/{id}/payment-return', name: 'shop_payment_return')]
+    public function paymentReturn(int $id): Response
+    {
+        $order = $this->shopOrderRepository->find($id);
+
+        if (!$order) {
+            throw new NotFoundHttpException('Order not found.');
+        }
+
+        if ($order->getStatus() === ShopOrder::STATUS_PAID) {
+            return $this->redirectToRoute('shop_success', ['id' => $order->getId()]);
+        }
+
+        return $this->redirectToRoute('shop_fail', ['id' => $order->getId()]);
+    }
+
+    #[Route('/payment/przelewy24/webhook', name: 'shop_payment_webhook', methods: ['POST'])]
+    public function przelewy24Webhook(Request $request): Response
+    {
+        $payload = json_decode($request->getContent(), true) ?? [];
+
+        $order = $this->shopOrderRepository->findOneBy(['przelewy24SessionId' => $payload['sessionId'] ?? null]);
+
+        if (!$order) {
+            return new Response('Order not found', 404);
+        }
+
+        if (!$this->przelewy24Service->verifyWebhook($payload)) {
+            $order->setStatus(ShopOrder::STATUS_FAILED);
+            $this->entityManager->flush();
+
+            return new Response('Verification failed', 400);
+        }
+
+        $order->setPrzelewy24OrderId((int) $payload['orderId']);
+        $order->setStatus(ShopOrder::STATUS_PAID);
+        $this->entityManager->flush();
+
+        return new Response('OK', 200);
     }
 }

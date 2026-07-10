@@ -6,6 +6,7 @@
 /* ── Google Fonts ─────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap');
 
+
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
     --c-forest:     #1a2e0f;   /* dark forest green */

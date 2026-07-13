@@ -34,6 +34,7 @@ return [
         'version' => '7.3.0',
     ],
     'swiper' => [
-        'version' => '14.0.2',
+        'version' => '14.0.5',
     ],
+
 ];

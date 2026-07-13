@@ -1,5 +1,5 @@
 import './styles/front.css';
-import './controllers/swiper_controller.js';
+// import './controllers/swiper_controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.site-header');

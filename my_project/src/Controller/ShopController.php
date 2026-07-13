@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Service\Przelewy24Service;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+#[Route('/sklep')]
 final class ShopController extends AbstractController
 {
     public function __construct(
@@ -23,6 +24,18 @@ final class ShopController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly Przelewy24Service $przelewy24Service,
     ) {
+    }
+
+    #[Route('', name: 'shop_index')]
+    public function index(): Response
+    {
+        $product = $this->productRepository->findOneBy(['isActive' => true], ['id' => 'ASC']);
+
+        if (!$product) {
+            throw new NotFoundHttpException('No products available.');
+        }
+
+        return $this->redirectToRoute('shop_product', ['slug' => $product->getSlug()]);
     }
 
     #[Route('/product/{slug}', name: 'shop_product')]

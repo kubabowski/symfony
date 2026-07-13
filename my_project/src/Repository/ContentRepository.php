@@ -25,4 +25,17 @@ class ContentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findHomepage(): ?\App\Entity\Content
+    {
+        $home = $this->createQueryBuilder('c')
+            ->andWhere('c.parent IS NULL')
+            ->andWhere('c.isActive = true')
+            ->andWhere('c.slug = :slug')
+            ->setParameter('slug', 'home')
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $home ?? ($this->findRootContents()[0] ?? null);
+    }
 }

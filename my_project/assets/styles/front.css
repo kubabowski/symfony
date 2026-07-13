@@ -102,6 +102,7 @@ body::before {
     background: transparent;
 }
 
+
 .site-header.scrolled {
     background: rgba(26, 46, 15, 0.96);
     backdrop-filter: blur(12px);
@@ -126,6 +127,11 @@ body::before {
     height: 52px;
     filter: brightness(0) invert(1);
     transition: opacity var(--transition);
+    opacity: 0;
+}
+
+.site-header.scrolled .custom-logo {
+    opacity: 1;
 }
 
 .site-logo img.custom-logo:hover { opacity: 0.8; }

@@ -6,9 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -108,7 +110,11 @@ class User
 
     public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
     public function setRoles(array $roles): static
@@ -116,6 +122,24 @@ class User
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * Required by UserInterface. Returns the identifier used to authenticate
+     * (in our case, the username field).
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
+    /**
+     * Required by UserInterface. Called after authentication succeeds; used
+     * to clear any temporary, sensitive data (e.g. plain-text passwords)
+     * stored on this entity during the login process. Nothing to clear here.
+     */
+    public function eraseCredentials(): void
+    {
     }
 
     /**
@@ -139,7 +163,6 @@ class User
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
             }
@@ -169,7 +192,6 @@ class User
     public function removePost(Post $post): static
     {
         if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
             if ($post->getAuthor() === $this) {
                 $post->setAuthor(null);
             }

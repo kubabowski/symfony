@@ -1,0 +1,16 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block body %}
+    <section class="order-status-section">
+        <div class="container">
+            <div class="order-status-box">
+                <div class="order-status-icon" style="background: rgba(184, 60, 42, .1); color: #8a2f1f;">404</div>
+                <h1>Page not found</h1>
+                <p>Sorry, the page you're looking for doesn't exist or may have been moved.</p>
+                <a href="{{ path('homepage') }}" class="btn btn-primary">Back to homepage</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

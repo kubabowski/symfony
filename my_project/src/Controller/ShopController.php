@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Service\Przelewy24Service;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Psr\Log\LoggerInterface;
 
 #[Route('/sklep')]
 final class ShopController extends AbstractController
@@ -23,6 +24,7 @@ final class ShopController extends AbstractController
         private readonly ShopOrderRepository $shopOrderRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly Przelewy24Service $przelewy24Service,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -81,7 +83,16 @@ final class ShopController extends AbstractController
             try {
                 $token = $this->przelewy24Service->registerTransaction($order, $returnUrl, $statusUrl);
             } catch (\Throwable $e) {
+                $this->logger->error('Przelewy24 transaction registration failed', [
+                    'orderId' => $order->getId(),
+                    'exception' => $e,
+                ]);
+
                 $order->setStatus(ShopOrder::STATUS_FAILED);
+                $order->setErrorMessage(
+                    $e->getMessage() . "\n\n" . $e->getTraceAsString()
+                );
+
                 $this->entityManager->flush();
 
                 return $this->redirectToRoute('shop_fail', ['id' => $order->getId()]);
@@ -121,6 +132,11 @@ final class ShopController extends AbstractController
             throw new NotFoundHttpException('Order not found.');
         }
 
+        $this->logger->warning('Order marked as failed', [
+            'orderId' => $order->getId(),
+            'status' => $order->getStatus(),
+        ]);
+
         return $this->render('shop/fail.html.twig', [
             'order' => $order,
         ]);
@@ -150,11 +166,15 @@ final class ShopController extends AbstractController
         $order = $this->shopOrderRepository->findOneBy(['przelewy24SessionId' => $payload['sessionId'] ?? null]);
 
         if (!$order) {
+            $this->logger->error('Przelewy24 webhook: order not found', ['sessionId' => $payload['sessionId'] ?? null]);
             return new Response('Order not found', 404);
         }
 
         if (!$this->przelewy24Service->verifyWebhook($payload)) {
+            $this->logger->error('Przelewy24 webhook: verification failed', ['orderId' => $order->getId()]);
+
             $order->setStatus(ShopOrder::STATUS_FAILED);
+            $order->setErrorMessage('Webhook verification failed.');
             $this->entityManager->flush();
 
             return new Response('Verification failed', 400);

@@ -67,6 +67,21 @@ class ShopOrder
     #[ORM\Column(nullable: true)]
     private ?int $amountGrosze = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $errorMessage = null;
+
+    public function getErrorMessage(): ?string
+    {
+        return $this->errorMessage;
+    }
+
+    public function setErrorMessage(?string $errorMessage): self
+    {
+        $this->errorMessage = $errorMessage;
+
+        return $this;
+    }
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\ShopOrder;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -16,6 +17,7 @@ class Przelewy24Service
         private readonly string $apiKey,
         private readonly string $crcKey,
         private readonly bool $sandbox,
+        private readonly LoggerInterface $logger,
     ) {
         $this->client = HttpClient::create([
             'auth_basic' => [$this->posId, $this->apiKey],
@@ -72,7 +74,11 @@ class Przelewy24Service
         $data = $response->toArray(false);
 
         if (!isset($data['data']['token'])) {
-            throw new \RuntimeException('Przelewy24: unable to register transaction: ' . json_encode($data));
+            $message = $data['error'] ??
+                $data['message'] ??
+                json_encode($data);
+
+            throw new \RuntimeException($message);
         }
 
         $order->setPrzelewy24SessionId($sessionId);
@@ -90,6 +96,7 @@ class Przelewy24Service
     public function verifyWebhook(array $payload): bool
     {
         if (!isset($payload['sessionId'], $payload['orderId'], $payload['amount'], $payload['currency'], $payload['sign'])) {
+            $this->logger->warning('Przelewy24 webhook: missing required fields', ['payload' => $payload]);
             return false;
         }
 
@@ -102,6 +109,7 @@ class Przelewy24Service
         ]);
 
         if (!hash_equals($expectedSign, $payload['sign'])) {
+            $this->logger->warning('Przelewy24 webhook: signature mismatch', ['sessionId' => $payload['sessionId']]);
             return false;
         }
 
